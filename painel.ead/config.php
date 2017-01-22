@@ -2,6 +2,7 @@
 
 require 'environment.php';
 define("BASE_URL", "http://painel.ead:81/");
+define("BASE_URL_EAD", "http://ead:81/");
 global $config;
 $config = array();
 
