@@ -15,7 +15,8 @@ class cursoController extends controller{
         $dados = array(
             'usuario' => array(),
             'curso'=> array(),
-            'modulos' => array()
+            'modulos' => array(),
+            'aulas' => array()
         );
         $usuario = new usuarios();
         $curso = new cursos();
@@ -40,6 +41,13 @@ class cursoController extends controller{
         if (isset($_POST['modulo']) && !empty($_POST['modulo'])) {
             $modulo = addslashes($_POST['modulo']);
             $modulos->add($id, $modulo);
+        }
+        if (isset($_POST['aula']) && !empty($_POST['aula'])) {
+            $modulo = addslashes($_POST['moduloaula']);
+            $aula = addslashes($_POST['aula']);
+            $tipo = addslashes($_POST['tipo']);
+            $aulas = new aulas();
+            $dados['aulas'] = $aulas->addAula($aula, $modulo, $tipo);
         }
         $dados['usuario'] = $usuario->getUsuario($_SESSION['lgadmin']);
         unset($usuario);

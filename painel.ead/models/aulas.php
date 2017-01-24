@@ -34,9 +34,7 @@ class aulas extends model{
         }
     }
     public function getAula($id_aula){
-        $array = array();
-        $id_aluno = $_SESSION['lgaluno'];
-        
+        $array = array();      
         $sql = "SELECT tipo, (SELECT count(*) FROM historico WHERE historico.id_aula = '$id_aula' AND historico.id_aluno = '$id_aluno') AS assistido FROM aulas WHERE id = '$id_aula'";
         $sql = $this->db->query($sql);
         if ($sql->rowCount() > 0) {
@@ -58,8 +56,43 @@ class aulas extends model{
                     $array['tipo'] = 'poll';
                 }
             }
-            $array['assistido'] = $assistido;
         }
         return $array;
+    }
+    public function addAula($aula, $id_modulo, $tipo){
+        $id_curso = "";
+        $ordem = "";
+        $sql = "SELECT id_curso FROM modulos WHERE id = '$id_modulo'";
+        $sql = $this->db->query($sql);
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            $id_curso = $sql['id_curso'];
+        }
+        $sql = "SELECT MAX(ordem+1) AS ordem FROM aulas WHERE id_modulo = '1' AND id_curso = '1'";
+        $sql = $this->db->query($sql);
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            $ordem = $sql['ordem'];
+        }
+        $sql = "INSERT INTO aulas SET id_modulo = '$id_modulo', id_curso = '$id_curso', ordem = '$ordem', tipo = '$tipo'";
+        $this->db->query($sql);
+        $id_aula = $this->db->lastInsertId();
+        if ($tipo == "video") {
+            $this->db->query("INSERT INTO videos SET id_aula = '$id_aula', nome = '$aula'");
+        }else{
+            $this->db->query("INSERT INTO questionarios SET id_aula = '$id_aula'");
+        }
+    }
+    public function delAula($id){
+        $sql = "SELECT id_curso FROM aulas WHERE id = '$id'";
+        $sql = $this->db->query($sql);
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            $this->db->query("DELETE FROM questionarios WHERE id_aula = '$id'");
+            $this->db->query("DELETE FROM videos WHERE id_aula = '$id'");
+            $this->db->query("DELETE FROM historico WHERE id_aula = '$id'");
+            $this->db->query("DELETE FROM aulas WHERE id = '$id'");
+            return $sql['id_curso'];
+        }
     }
 }
