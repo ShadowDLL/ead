@@ -4,7 +4,7 @@
     <h3><?php echo $curso->getDescricao(); ?></h3>
 </div>
 <div class="cursoleft">
-    <div class="progresso"><strong>Seu Progresso:</strong><br/> <?php echo $assistidas; ?> aulas de <?php echo $totalcurso; ?> (<?php echo floor(($assistidas/$totalcurso)*100); ?>% completo)</div>
+    <div class="progresso"><strong>Seu Progresso:</strong><br/> <?php echo $assistidas; ?> aulas de <?php echo $totalcurso; ?> (<?php echo ceil(($assistidas/$totalcurso)*100); ?>% completo)</div>
     <?php foreach ($modulos as $modulo) :?>
         <div class="modulo"><?php echo($modulo['nome']); ?></div>
         <?php foreach ($modulo['aulas'] as $aula) :?>
