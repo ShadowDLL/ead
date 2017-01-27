@@ -20,16 +20,17 @@ class cursosController extends controller{
             'totalcurso' => ''
         );
         $aluno = new alunos();
+        $curso = new cursos();
+        
         $aluno->setAluno($_SESSION['lgaluno']);
         $dados['info'] = $aluno;
-        if ($aluno->isInscrito($id)) {
-            $curso = new cursos();
+        if ($aluno->isInscrito($id)) {      
             $curso->setCurso($id);
             $dados['curso'] = $curso;
             $modulos = new modulos();
             $dados['modulos'] = $modulos->getModulo($id);
             $dados['assistidas'] = $aluno->getAulasAssistidas($id);
-            $dados['totalcurso'] = $aluno->getTotalAulasCurso($id);
+            $dados['totalcurso'] = $curso->getTotalAulasCurso();
             $this->loadTemplate("curso_entrar", $dados);
         }
         else{
