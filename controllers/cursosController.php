@@ -49,6 +49,7 @@ class cursosController extends controller{
         );
         $aluno = new alunos();
         $curso = new cursos();
+        
         $aluno->setAluno($_SESSION['lgaluno']);
         $dados['info'] = $aluno;
         $aula = new aulas();
