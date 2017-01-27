@@ -49,10 +49,10 @@ class cursosController extends controller{
         );
         $aluno = new alunos();
         $curso = new cursos();
+        $aula = new aulas();
         
         $aluno->setAluno($_SESSION['lgaluno']);
-        $dados['info'] = $aluno;
-        $aula = new aulas();
+        $dados['info'] = $aluno;   
         $id = $aula->getCursoDeAula($id_aula);
         if ($aluno->isInscrito($id)) {
             $curso->setCurso($id);
@@ -78,6 +78,7 @@ class cursosController extends controller{
                 $opcao = addslashes($_POST['opcao']);
                 if ($opcao == $dados['aula_info']['resposta']){
                     $dados['resposta'] = 'RESPOSTA CORRETA!';
+                    $aula->marcarAssistido($id_aula);
                 }
                 else{
                     $dados['resposta'] = 'RESPOSTA INCORRETA!';
