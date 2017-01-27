@@ -38,7 +38,6 @@ class alunos extends model{
     public function getAulasAssistidas($id_curso){
         $sql = "SELECT historico.id FROM historico INNER JOIN aulas ON aulas.id = historico.id_aula INNER JOIN cursos ON cursos.id = aulas.id_curso WHERE historico.id_aluno = '".($this->info['id'])."' AND cursos.id = '$id_curso'";
         $sql = $this->db->query($sql);
-        $sql = $sql->fetchAll();
         return $sql->rowCount();
     }
 }
