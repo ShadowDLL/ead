@@ -1,4 +1,4 @@
-<div class="container" style="width:900;">
+<div class="container" style="width:700;">
     <form method="POST">
         <h1>Editar Módulo</h1>
         <fieldset>

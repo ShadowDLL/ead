@@ -19,3 +19,11 @@ function marcarAssistido(obj){
         url:"/ajax/marcarAssistido/"+id
     });
 }
+function showAulas(id){   
+    $('#'+id).slideToggle();
+}
+function hideAulas(itens){
+    for (var i = 1; i <= itens; i++) {
+        $('#'+i).slideUp('fast');
+    }
+}

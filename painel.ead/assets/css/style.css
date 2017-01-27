@@ -22,7 +22,7 @@ body{
 .topo a div{
     height: 40px;
     line-height: 40px;
-    float: right; 
+    float: left; 
     padding-right: 20px;
     padding-left: 20px;
 }
@@ -110,4 +110,5 @@ body{
 .modulo_aula a{
     float: right;
 }
+
 

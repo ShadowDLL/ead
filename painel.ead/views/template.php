@@ -11,9 +11,9 @@
     </head>
     <body>
         <div class="topo">  
-            <a href="<?php echo BASE_URL; ?>login/logout">
-                <div>Sair</div>
-            </a>
+            <a style="float:right;" href="<?php echo BASE_URL; ?>login/logout"><div>Sair</div></a>
+            <a href="<?php echo BASE_URL; ?>aluno"><div>Aluno</div></a>
+            <a href="<?php echo BASE_URL; ?>home"><div>Curso</div></a>
             <div class="topousuario"><?php echo $usuario['email']; ?></div>
         </div>
         <div>

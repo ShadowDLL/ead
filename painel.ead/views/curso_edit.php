@@ -1,4 +1,4 @@
-<div class="container" style="width:900;">
+<div class="container" style="width:700;">
     <h1>Editar Curso</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="text" name="nome" class="form form-control" placeholder="Nome do Curso" value="<?php echo utf8_encode($curso['nome']); ?>" autofocus /><br/>
@@ -42,7 +42,7 @@
                 </div>
                 <?php foreach($modulo['aulas'] as $aula) :?>
                     <div class="modulo_aula">
-                        <?php echo utf8_encode($aula['nome']); ?></td>
+                        <?php echo $aula['nome']; ?></td>
                         <a href="<?php echo BASE_URL; ?>aula/del/<?php echo $aula['id']; ?>" style="color:#C93C35;text-decoration:none;">&nbsp;<strong>[Excluir]</strong></a>
                         <a href="<?php echo BASE_URL; ?>aula/edit/<?php echo $aula['id']; ?>" style="color:#3A75C5;text-decoration:none;">&nbsp;<strong>[Editar]</strong></a>
                     </div>

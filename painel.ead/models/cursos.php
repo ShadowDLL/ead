@@ -21,43 +21,59 @@ class cursos extends model{
         }
         return $array;
     }
-        public function del($id){
-        $sql = "SELECT id FROM aulas WHERE id_curso = '$id'";
+
+
+    public function getInscrito($id_aluno){
+        $array = array();
+        $sql = "SELECT id_curso FROM aluno_curso WHERE id_aluno = '$id_aluno'";
         $sql = $this->db->query($sql);
         if ($sql->rowCount() > 0) {
-            $aulas = $sql->fetchAll();
-            foreach ($aulas as $aula) {
-                $sql = "DELETE FROM historico WHERE id_aula = '".$aula['id_aula']."'";
-                $this->db->query($sql);
-                $sql = "DELETE FROM videos WHERE id_aula = '".$aula['id_aula']."'";
-                $this->db->query($sql);
-                $sql = "DELETE FROM questionarios WHERE id_aula = '".$aula['id_aula']."'";
-                $this->db->query($sql);
+            $sql = $sql->fetchAll();
+            foreach($sql as $id_curso){
+                $array[] = $id_curso['id_curso'];
             }
         }
-        $sql = "DELETE FROM aluno_curso WHERE id_curso = '$id'";
-        $this->db->query($sql);
-        
-        $sql = "DELETE FROM aulas WHERE id_curso = '$id'";
-        $this->db->query($sql);
-        
-        $sql = "DELETE FROM modulos WHERE id_curso = '$id'";
-        $this->db->query($sql);
-        
-        $sql = "DELETE FROM cursos WHERE id = '$id'";
-        $this->db->query($sql);
+        return $array;
     }
-    public function edit($id, $nome, $descricao){
-        $sql = "UPDATE cursos SET nome = '$nome', descricao = '$descricao' WHERE id = '$id'";
-        $this->db->query($sql);
+
+
+    public function del($id){
+    $sql = "SELECT id FROM aulas WHERE id_curso = '$id'";
+    $sql = $this->db->query($sql);
+    if ($sql->rowCount() > 0) {
+        $aulas = $sql->fetchAll();
+        foreach ($aulas as $aula) {
+            $sql = "DELETE FROM historico WHERE id_aula = '".$aula['id_aula']."'";
+            $this->db->query($sql);
+            $sql = "DELETE FROM videos WHERE id_aula = '".$aula['id_aula']."'";
+            $this->db->query($sql);
+            $sql = "DELETE FROM questionarios WHERE id_aula = '".$aula['id_aula']."'";
+            $this->db->query($sql);
+        }
     }
-    public function updateImage($id, $imagem){
-        $sql = "UPDATE cursos SET imagem = '$imagem' WHERE id = '$id'";
-        $this->db->query($sql);
-    }
-    public function add($nome, $imagem, $descricao){
-        $sql = "INSERT INTO cursos SET nome = '$nome', imagem = '$imagem', descricao = '$descricao'";
-        $this->db->query($sql);
-    }
+    $sql = "DELETE FROM aluno_curso WHERE id_curso = '$id'";
+    $this->db->query($sql);
+    
+    $sql = "DELETE FROM aulas WHERE id_curso = '$id'";
+    $this->db->query($sql);
+    
+    $sql = "DELETE FROM modulos WHERE id_curso = '$id'";
+    $this->db->query($sql);
+    
+    $sql = "DELETE FROM cursos WHERE id = '$id'";
+    $this->db->query($sql);
+}
+public function edit($id, $nome, $descricao){
+    $sql = "UPDATE cursos SET nome = '$nome', descricao = '$descricao' WHERE id = '$id'";
+    $this->db->query($sql);
+}
+public function updateImage($id, $imagem){
+    $sql = "UPDATE cursos SET imagem = '$imagem' WHERE id = '$id'";
+    $this->db->query($sql);
+}
+public function add($nome, $imagem, $descricao){
+    $sql = "INSERT INTO cursos SET nome = '$nome', imagem = '$imagem', descricao = '$descricao'";
+    $this->db->query($sql);
+}
 }
 

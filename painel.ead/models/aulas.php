@@ -34,27 +34,20 @@ class aulas extends model{
         }
     }
     public function getAula($id_aula){
-        $array = array();      
-        $sql = "SELECT tipo, (SELECT count(*) FROM historico WHERE historico.id_aula = '$id_aula' AND historico.id_aluno = '$id_aluno') AS assistido FROM aulas WHERE id = '$id_aula'";
+        $array = array();
+        $sql = "SELECT * FROM aulas WHERE id = '$id_aula'";
         $sql = $this->db->query($sql);
         if ($sql->rowCount() > 0) {
-            $sql = $sql->fetch();
-            $assistido = $sql['assistido'];
-            if ($sql['tipo'] == 'video') {
-                $sql = "SELECT * FROM videos WHERE id_aula = '$id_aula'";
+            $array = $sql->fetch();
+            if ($array['tipo'] == "video") {
+                $sql = "SELECT * FROM videos WHERE id_aula = '".$array['id']."'";
                 $sql = $this->db->query($sql);
-                if ($sql->rowCount() > 0) {
-                    $array = $sql->fetch();
-                    $array['tipo'] = 'video';
-                }
+                $array['video'] = $sql->fetch();
             }
-            elseif($sql['tipo'] == 'poll'){
-                    $sql = "SELECT * FROM questionarios WHERE id_aula = '$id_aula'";
+            else{
+                $sql = "SELECT * FROM questionarios WHERE id_aula = '".$array['id']."'";
                 $sql = $this->db->query($sql);
-                if ($sql->rowCount() > 0) {
-                    $array = $sql->fetch();
-                    $array['tipo'] = 'poll';
-                }
+                $array['questionario'] = $sql->fetch();
             }
         }
         return $array;
@@ -83,6 +76,32 @@ class aulas extends model{
             $this->db->query("INSERT INTO questionarios SET id_aula = '$id_aula'");
         }
     }
+
+    private function getIdCurso($id_aula){
+        $sql = "SELECT id_curso FROM aulas WHERE id = '$id_aula'";
+        $sql = $this->db->query($sql);
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            return $sql['id_curso'];
+        }
+        else{
+            return '';
+        }
+    }
+
+    public function setVideoAula($id, $tituloVideo, $descricao, $url){
+        $sql = "UPDATE videos SET nome = '$tituloVideo', descricao = '$descricao', url = '$url' WHERE id_aula = '$id'";
+        $this->db->query($sql);
+        return $this->getIdCurso($id);
+    }
+
+    public function setQuestionarioAula($id, $pergunta, $op1, $op2, $op3, $op4, $resposta){
+        $sql = "UPDATE questionarios SET pergunta = '$pergunta', opcao1 = '$op1', opcao2 = '$op2', opcao3 = '$op3', opcao4 = '$op4', resposta = '$resposta' WHERE id_aula = '$id'";
+        $this->db->query($sql);
+        return $this->getIdCurso($id);
+    }
+
+
     public function delAula($id){
         $sql = "SELECT id_curso FROM aulas WHERE id = '$id'";
         $sql = $this->db->query($sql);

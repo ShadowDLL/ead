@@ -15,7 +15,9 @@ class cursosController extends controller{
         $dados = array(
             'curso' => array(),
             'modulos' => array(),
-            'info' => array()
+            'info' => array(),
+            'assistidas' => '',
+            'totalcurso' => ''
         );
         $aluno = new alunos();
         $aluno->setAluno($_SESSION['lgaluno']);
@@ -26,8 +28,8 @@ class cursosController extends controller{
             $dados['curso'] = $curso;
             $modulos = new modulos();
             $dados['modulos'] = $modulos->getModulo($id);
-            
-            
+            $dados['assistidas'] = $aluno->getAulasAssistidas($id);
+            $dados['totalcurso'] = $aluno->getTotalAulasCurso($id);
             $this->loadTemplate("curso_entrar", $dados);
         }
         else{
