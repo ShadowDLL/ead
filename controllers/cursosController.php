@@ -43,15 +43,17 @@ class cursosController extends controller{
             'modulos' => array(),
             'info' => array(),
             'aula' => array(),
-            'resposta' => ''
+            'resposta' => '',
+            'assistidas' => '',
+            'totalcurso' => ''
         );
         $aluno = new alunos();
+        $curso = new cursos();
         $aluno->setAluno($_SESSION['lgaluno']);
         $dados['info'] = $aluno;
         $aula = new aulas();
         $id = $aula->getCursoDeAula($id_aula);
         if ($aluno->isInscrito($id)) {
-            $curso = new cursos();
             $curso->setCurso($id);
             $dados['curso'] = $curso;
             $modulos = new modulos();
@@ -81,6 +83,8 @@ class cursosController extends controller{
                 }
                 $_SESSION['poll'.$id_aula]++;
             }
+            $dados['assistidas'] = $aluno->getAulasAssistidas($id_aula);
+            $dados['totalcurso'] = $curso->getTotalAulasCurso();
             $this->loadTemplate($view, $dados);
         }
         else{
