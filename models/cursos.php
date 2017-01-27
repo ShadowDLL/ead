@@ -30,7 +30,6 @@ class cursos extends model{
     }
     public function getTotalAulasCurso(){
         $sql = $this->db->query("SELECT id FROM aulas WHERE id_curso = '".($this->info['id'])."'");
-        $sql = $sql->fetchAll();
         return $sql->rowCount();
     }
 }
