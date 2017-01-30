@@ -13,11 +13,11 @@ function updateArea(){
     $('#video').height(video_altura);    
 }
 function marcarAssistido(obj){
-    var id = $(obj).attr('data-id');
-    $(obj).remove();
+    var id = $(obj).attr('data-id'); 
     $.ajax({
         url:"/ajax/marcarAssistido/"+id
     });
+    $(obj).remove();
 }
 function showAulas(id){   
     $('#'+id).slideToggle();

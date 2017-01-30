@@ -10,6 +10,7 @@ class aulas extends model{
         if ($sql->rowCount() > 0) {
             $array = $sql->fetchAll();
             foreach ($array as $key => $value) {
+                $array[$key]['assistido'] = $this->isAssistido($value['id'], $_SESSION['lgaluno']);
                 if ($array[$key]['tipo'] == 'video') {
                     $sql = "SELECT nome FROM videos WHERE id_aula = '".$value['id']."'";
                     $sql = $this->db->query($sql)->fetch();
@@ -21,6 +22,11 @@ class aulas extends model{
             }
         }
         return $array;
+    }
+    private function isAssistido($id_aula, $id_aluno){
+        $sql = "SELECT id FROM historico WHERE id_aula = '$id_aula' AND id_aluno = '$id_aluno'";
+        $sql = $this->db->query($sql);
+        return ($sql->rowCount() > 0)?true:false;
     }
     public function getCursoDeAula($id_aula){
         $sql = "SELECT id_curso FROM aulas WHERE id = '$id_aula'";
@@ -36,7 +42,6 @@ class aulas extends model{
     public function getAula($id_aula){
         $array = array();
         $id_aluno = $_SESSION['lgaluno'];
-        
         $sql = "SELECT tipo, (SELECT count(*) FROM historico WHERE historico.id_aula = '$id_aula' AND historico.id_aluno = '$id_aluno') AS assistido FROM aulas WHERE id = '$id_aula'";
         $sql = $this->db->query($sql);
         if ($sql->rowCount() > 0) {

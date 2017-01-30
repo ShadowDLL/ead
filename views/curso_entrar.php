@@ -12,10 +12,10 @@
 		}
 	?>
     <?php foreach ($modulos as $modulo) :?>
-        <div class="modulo" onclick="hideAulas('<?php echo $idDiv; ?>');showAulas('<?php echo $modulo['id']; ?>');" ><?php echo($modulo['nome'])?></div>
+        <div class="modulo" onclick="hideAulas('<?php echo $idDiv; ?>');showAulas('<?php echo $modulo['id']; ?>');" ><?php echo utf8_encode($modulo['nome'])?></div>
         <div id="<?php echo $modulo['id']; ?>" class="modulo_aula">
 	        <?php foreach ($modulo['aulas'] as $aula) :?>
-	        		<a href="<?php echo BASE_URL."cursos/aula/".$aula['id']; ?>"><div class="aula"><?php echo $aula['nome']; ?></div></a>
+	        		<a href="<?php echo BASE_URL."cursos/aula/".$aula['id']; ?>"><div class="aula"><?php echo $aula['nome']; ?><img src="<?php echo BASE_URL; ?>assets/images/<?php echo ($aula['assistido'])?'v.jpg':'v2.jpg'; ?>" height="20" style="float: right;margin-top: 5px; padding-right: 10px;"></div></a>
 	        <?php endforeach; ?>
         </div>
     <?php endforeach; ?>
